@@ -1,3 +1,12 @@
 <div>
-  <p></p>
+	<p>Perfect weather conditions:</p>
+	<p>Temperature: {{ perfectWeatherConditions.temp.male }}˚ C</p>
+	<p>Humidiy: {{ perfectWeatherConditions.humidity.male }}˚ C</p>
 </div>
+
+<input type="tel" id="custom-temp" placeholder="Desired temperature" (change)="recalculateWeather($event)">
+<input type="tel" id="custom-humid" placeholder="Desired humidiy" (change)="recalculateWeather($event)">
+
+<ul>
+	<li *ngFor="let station of suitableStations">{{ station.name }}</li>
+</ul>

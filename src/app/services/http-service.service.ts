@@ -11,9 +11,10 @@ export class HttpService {
   ) { }
 
 
-  getWeatherByCityName(cityName: string) {
+  getWeatherWorld() {
   	const apiKey = '87344724acbcbb242a4753492a391ee6'
-  	let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`
+  	const boundingBox = '-180,-90,180,90'
+  	let url = `https://api.openweathermap.org/data/2.5/box/city?bbox=${boundingBox}&appid=${apiKey}`
 
   	return this.http.get(url)
   }
