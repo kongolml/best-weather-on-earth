@@ -1,0 +1,14 @@
+.gender-selector {
+    label {
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    input {
+        display: none;
+
+        &:checked ~ label {
+            color: green;
+        }
+    }
+}

@@ -1,12 +1,30 @@
+<div class="gender-selector">
+	<span>
+		<input type="radio" name="gender" value="male" id="gender-male" checked (change)="setGender($event)">
+		<label for="gender-male">Male</label>
+	</span>
+
+	<span>
+		<input type="radio" name="gender" value="female" id="gender-female" (change)="setGender($event)">
+		<label for="gender-female">Female</label>
+	</span>
+</div><!-- gender-selector -->
+
 <div>
-	<p>Perfect weather conditions:</p>
-	<p>Temperature: {{ perfectWeatherConditions.temp.male }}˚ C</p>
-	<p>Humidiy: {{ perfectWeatherConditions.humidity.male }}˚ C</p>
+	<label for="custom-temp">Temperature (default {{ perfectWeatherConditions[gender].temperature }}˚ C)</label>
+	<input type="tel" id="custom-temp" placeholder="Desired temperature" (keyup)="setCustomWeather($event)">
 </div>
+<div>
+	<label for="custom-humid">Humidity (default {{ perfectWeatherConditions[gender].humidity }}%)</label>
+	<input type="tel" id="custom-humid" placeholder="Desired humidiy" (keyup)="setCustomWeather($event)">
+</div>
+<p *ngIf="bestStation && bestStation.length">Perfect fit: <strong>{{ bestStation.name }}</strong> ({{ bestStation.main.temp }}˚ C / {{ bestStation.main.humidity }}%)</p>
 
-<input type="tel" id="custom-temp" placeholder="Desired temperature" (change)="recalculateWeather($event)">
-<input type="tel" id="custom-humid" placeholder="Desired humidiy" (change)="recalculateWeather($event)">
+<p *ngIf="!bestStation">Sorry, there is no place in the world with this strict weather conditions, but don't worry, we found good fit for you:</p>
 
+<p *ngIf="bestStation && bestStation.length">Worth mentioning:</p>
+
+<p *ngIf="suitableStations">Cities with weather, close to your perfect one:</p>
 <ul>
-	<li *ngFor="let station of suitableStations">{{ station.name }}</li>
+	<li *ngFor="let station of suitableStations"><strong>{{ station.name }}</strong> ({{ station.main.temp }}˚ C / {{ station.main.humidity }}%)</li>
 </ul>

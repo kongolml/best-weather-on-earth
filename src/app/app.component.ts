@@ -4,7 +4,7 @@ import { HttpService } from './services/http-service.service'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 
 
@@ -16,21 +16,22 @@ export class AppComponent {
 	title = 'best-weather-on-earth';
 
   	perfectWeatherConditions = {
-  		temp: {
-  			male: 21,
-  			female: 22
-  		},
-  		humidity: {
-  			male: 50,
-  			female: 50
-  		},
-  		temperature: 21,
-  		humid: 50
+		male: {
+			temperature: 21,
+			humidity: 50
+		},
+		female: {
+			temperature: 22,
+			humidity: 50
+		}
   	}
 
 	weatherData: Array<any> = []
 	bestStation: any
 	suitableStations: Array<any> = []
+	customTemperature: number
+	customHumidity: number
+	gender: string = 'male'
 	  
 
   	ngOnInit() {
@@ -53,30 +54,52 @@ export class AppComponent {
 	/**
 	 * Filter weather data within the range
 	 */
-  	findBestWeather(temperature: number = this.perfectWeatherConditions.temperature, humidity: number = this.perfectWeatherConditions.humid) {
-  		this.suitableStations = this.weatherData.filter(station => {
+  	findBestWeather(temperature: number = this.customTemperature || this.perfectWeatherConditions[this.gender].temperature, humidity: number = this.customHumidity || this.perfectWeatherConditions[this.gender].humidity) {
+		let perfectMatch = this.weatherData.filter(station => {
+			return (
+				station.main.temp === temperature &&
+				station.main.humidity === humidity
+			)
+		})
+
+		this.bestStation = perfectMatch[0]
+		
+		this.suitableStations = this.weatherData.filter(station => {
   			return (
-  				this.isInRange(station.main.temp, temperature, 2) &&
-  				this.isInRange(station.main.humidity, humidity, 8)
+  				this.isInRange(parseInt(station.main.temp), temperature, 1) &&
+  				this.isInRange(station.main.humidity, humidity, 5)
   			)
 		})
-		  
-  		console.log(this.suitableStations)
 	}
 	  
 
-	recalculateWeather(event) {
+	/**
+	 * Applies custom weather values into variables
+	 * @param event 
+	 */
+	setCustomWeather(event) {
 		let value = event.target.value
 
 		switch(event.target.id) {
 			case 'custom-temp':
-				this.findBestWeather(value)
+				this.customTemperature = parseInt(value)
 				break;
 
 			case 'custom-humid':
-				this.findBestWeather(value)
+				this.customHumidity = parseInt(value)
 				break;
 		}
+
+		this.findBestWeather()
+	}
+
+
+	/**
+	 * Set prefered gender
+	 * @param event
+	 */
+	setGender(event) {
+		this.gender = event.target.value
 	}
 
 
@@ -87,7 +110,7 @@ export class AppComponent {
 	 * @param {number} deviation 
 	 * @returns {boolean}
 	 */
-  	isInRange(value, dataToCompare, deviation) {
-  		return value >= dataToCompare - deviation && value <= dataToCompare + deviation
+  	isInRange(value: number, dataToCompare: number, deviation: number) {
+  		return (value >= dataToCompare - deviation) && (value <= dataToCompare + deviation)
 	}
 }
