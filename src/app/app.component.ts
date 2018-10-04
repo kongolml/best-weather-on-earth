@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser'
 import { HttpService } from './services/http-service.service'
 
 @Component({
@@ -10,7 +11,8 @@ import { HttpService } from './services/http-service.service'
 
 export class AppComponent {
 	constructor(
-		private httpService: HttpService
+		private httpService: HttpService,
+		private sanitizer: DomSanitizer
 	) {}
 
 	title = 'best-weather-on-earth';
@@ -70,6 +72,49 @@ export class AppComponent {
   				this.isInRange(station.main.humidity, humidity, 5)
   			)
 		})
+
+		console.log(this.suitableStations)
+	}
+
+
+	/**
+	 * Resolve weather icon for station
+	 * @param station
+	 */
+	getWeatherIcon(station) {
+		let iconHTML
+
+		switch (true) {
+			case /^800/gm.test(station.weather[0].id):
+				iconHTML = '<i class="icon-sun"></i>'
+				break;
+			
+			case /^8/gm.test(station.weather[0].id):
+				iconHTML = '<i class="icon-clouds"></i>'
+				break;
+
+			case /^7/gm.test(station.weather[0].id):
+				iconHTML = '<i class="icon--cloud-sun-fog"></i>'
+				break;
+
+			case /^6/gm.test(station.weather[0].id):
+				iconHTML = '<i class="icon-cloud-snowflakes"></i>'
+				break;
+
+			case /^5/gm.test(station.weather[0].id):
+				iconHTML = '<i class="icon-cloud-rain"></i>'
+				break;
+
+			case /^3/gm.test(station.weather[0].id):
+				iconHTML = '<i class="icon-cloud-sun-snow"></i>'
+				break;
+
+			case /^2/gm.test(station.weather[0].id):
+				iconHTML = '<i class="icon-cloud-lightning"></i>'
+				break;
+		}
+
+		return this.sanitizer.bypassSecurityTrustHtml(iconHTML)
 	}
 	  
 

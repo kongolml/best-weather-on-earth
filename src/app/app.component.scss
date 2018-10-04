@@ -1,14 +1,15 @@
-.gender-selector {
-    label {
-        cursor: pointer;
-        margin-right: 10px;
+.gender-selector-wrp, .weather-condition-wrp {
+    margin-bottom: 30px;
+}
+
+.stations-list {
+    .badge-wrp {
+        display: flex;
+        align-items: center;
     }
 
-    input {
-        display: none;
-
-        &:checked ~ label {
-            color: green;
-        }
+    .weather-icon {
+        margin-right: 15px;
+        font-size: 1.4rem;
     }
 }

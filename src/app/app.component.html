@@ -1,30 +1,80 @@
-<div class="gender-selector">
-	<span>
-		<input type="radio" name="gender" value="male" id="gender-male" checked (change)="setGender($event)">
-		<label for="gender-male">Male</label>
-	</span>
+<div class="container">
+	<div class="row gender-selector-wrp">
+		<div class="col">
+			<p>Select preferable gender:</p>
 
-	<span>
-		<input type="radio" name="gender" value="female" id="gender-female" (change)="setGender($event)">
-		<label for="gender-female">Female</label>
-	</span>
-</div><!-- gender-selector -->
+			<div class="btn-group btn-group-toggle gender-selector" data-toggle="buttons">
+				<label class="btn btn-secondary active">
+					<input type="radio" name="gender" value="male" id="gender-male" checked (change)="setGender($event)" autocomplete="off"> Male
+				</label>
+				<label class="btn btn-secondary">
+					<input type="radio" name="gender" value="female" id="gender-female" (change)="setGender($event)" autocomplete="off"> Female
+				</label>
+			</div>
+		</div>
+	</div><!-- row -->
 
-<div>
-	<label for="custom-temp">Temperature (default {{ perfectWeatherConditions[gender].temperature }}˚ C)</label>
-	<input type="tel" id="custom-temp" placeholder="Desired temperature" (keyup)="setCustomWeather($event)">
-</div>
-<div>
-	<label for="custom-humid">Humidity (default {{ perfectWeatherConditions[gender].humidity }}%)</label>
-	<input type="tel" id="custom-humid" placeholder="Desired humidiy" (keyup)="setCustomWeather($event)">
-</div>
-<p *ngIf="bestStation && bestStation.length">Perfect fit: <strong>{{ bestStation.name }}</strong> ({{ bestStation.main.temp }}˚ C / {{ bestStation.main.humidity }}%)</p>
 
-<p *ngIf="!bestStation">Sorry, there is no place in the world with this strict weather conditions, but don't worry, we found good fit for you:</p>
+	<div class="row">
+		<div class="col">
+			<p>You can also set preferable temperature and humidity:</p>
+		</div>
+	</div>
 
-<p *ngIf="bestStation && bestStation.length">Worth mentioning:</p>
+	<div class="row weather-condition-wrp">
+		<div class="col">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Temperature</span>
+				</div>
+				<input class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="{{ perfectWeatherConditions[gender].temperature }}" type="tel" id="custom-temp" (keyup)="setCustomWeather($event)">
+				<div class="input-group-append">
+					<span class="input-group-text">˚ C</span>
+				</div>
+			</div>
+		</div><!-- col -->
 
-<p *ngIf="suitableStations">Cities with weather, close to your perfect one:</p>
-<ul>
-	<li *ngFor="let station of suitableStations"><strong>{{ station.name }}</strong> ({{ station.main.temp }}˚ C / {{ station.main.humidity }}%)</li>
-</ul>
+		<div class="col">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Humidity</span>
+				</div>
+				<input class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="{{ perfectWeatherConditions[gender].humidity }}" type="tel" id="custom-humid" (keyup)="setCustomWeather($event)">
+				<div class="input-group-append">
+					<span class="input-group-text">%</span>
+				</div>
+			</div>
+		</div><!-- col -->
+	</div><!-- row -->
+
+
+	<div class="row">
+		<div class="col">
+			<p *ngIf="bestStation && bestStation.length">Perfect fit: <strong>{{ bestStation.name }}</strong> ({{ bestStation.main.temp }}˚ C / {{ bestStation.main.humidity }}%)</p>
+
+			<div *ngIf="!bestStation">
+				<p>Sorry, there is no place in the world with this strict weather conditions :(</p>
+				<p>But don't worry, we found a good fit for you (with 1˚ C and 5% deviation), take a look:</p>
+			</div>
+
+			<p *ngIf="bestStation && bestStation.length">Worth mentioning:</p>
+
+			<ul class="list-group stations-list">
+				<li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let station of suitableStations">
+					{{ station.name }}
+
+					
+					<span class="badge-wrp">
+						<span class="weather-icon" [innerHTML]="getWeatherIcon(station)"></span>
+
+						<span class="badge badge-primary badge-pill">
+							{{ station.main.temp }}˚ C / {{ station.main.humidity }}%
+						</span>
+					</span>
+				</li>
+			</ul>
+		</div><!-- col -->
+	</div><!-- row -->
+</div><!-- container -->
+
+
