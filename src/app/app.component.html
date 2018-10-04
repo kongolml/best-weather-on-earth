@@ -50,17 +50,33 @@
 
 	<div class="row">
 		<div class="col">
-			<p *ngIf="bestStation && bestStation.length">Perfect fit: <strong>{{ bestStation.name }}</strong> ({{ bestStation.main.temp }}˚ C / {{ bestStation.main.humidity }}%)</p>
+			<ul class="list-group stations-list" *ngIf="bestStation && bestStation.length">
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					{{ bestStation.name }}
+
+					<span class="badge-wrp">
+						<span class="weather-icon" [innerHTML]="getWeatherIcon(bestStation)"></span>
+
+						<span class="badge badge-primary badge-pill">
+							{{ bestStation.main.temp }}˚ C / {{ bestStation.main.humidity }}%
+						</span>
+					</span>
+				</li>
+			</ul>
 
 			<div *ngIf="!bestStation">
-				<p>Sorry, there is no place in the world with this strict weather conditions :(</p>
+				<p>Sorry, there is no place in the world with this strict weather conditions (means that no cities with exact 21˚ C / 50% were found).</p>
 				<p>But don't worry, we found a good fit for you (with 1˚ C and 5% deviation), take a look:</p>
 			</div>
 
 			<p *ngIf="bestStation && bestStation.length">Worth mentioning:</p>
+		</div><!-- col -->
+	</div><!-- row -->
 
+	<div class="row">
+		<div class="col">
 			<ul class="list-group stations-list">
-				<li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let station of suitableStations">
+				<li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let station of suitableStations | slice:0:suitableStationsToShow">
 					{{ station.name }}
 
 					
@@ -71,10 +87,18 @@
 							{{ station.main.temp }}˚ C / {{ station.main.humidity }}%
 						</span>
 					</span>
+
+					<button type="button" class="btn btn-link" (click)="getForecast(station.id)">Get forecast</button>
 				</li>
 			</ul>
 		</div><!-- col -->
 	</div><!-- row -->
+
+	<div class="row justify-content-center" *ngIf="suitableStations && suitableStations.length && haveMoreStationsToLoad">
+		<div class="col-4 load-more-wrp">
+			<button type="button" class="btn btn-outline-primary" (click)="showMoreStations()">Load more cities</button>
+		</div>
+	</div>
 </div><!-- container -->
 
 

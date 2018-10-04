@@ -31,6 +31,8 @@ export class AppComponent {
 	weatherData: Array<any> = []
 	bestStation: any
 	suitableStations: Array<any> = []
+	suitableStationsToShow: number = 5
+	haveMoreStationsToLoad: boolean = true
 	customTemperature: number
 	customHumidity: number
 	gender: string = 'male'
@@ -116,6 +118,14 @@ export class AppComponent {
 
 		return this.sanitizer.bypassSecurityTrustHtml(iconHTML)
 	}
+
+
+
+	getForecast(cityID: number) {
+		this.httpService.getWeatherForecast(cityID).subscribe(resp => {
+			console.log(resp)
+		})
+	}
 	  
 
 	/**
@@ -136,6 +146,18 @@ export class AppComponent {
 		}
 
 		this.findBestWeather()
+	}
+
+
+	/**
+	 * Load more suitable stations
+	 */
+	showMoreStations() {
+		if(this.suitableStationsToShow < this.suitableStations.length) {
+			this.suitableStationsToShow += 5
+		} else {
+			this.haveMoreStationsToLoad = false
+		}
 	}
 
 
