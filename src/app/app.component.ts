@@ -42,7 +42,8 @@ export class AppComponent {
 
   	ngOnInit() {
   		this.getWeather()
-  	}
+	}
+	  
 
 	
 	/**
@@ -268,6 +269,13 @@ export class AppComponent {
 		this.gender = event.target.value
 
 		this.findBestWeather()
+
+		// do bootstrap work: change classes of radio buttons
+		// this way we dont need to load bootstrap js and jquery
+		// P.S. was lazy to add polyfill for NodeList.forEach()
+		document.querySelectorAll('.gender-selector label')[0].classList.remove('active')
+		document.querySelectorAll('.gender-selector label')[1].classList.remove('active')
+		event.target.parentNode.classList.add('active')
 	}
 
 
