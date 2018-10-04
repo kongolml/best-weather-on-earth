@@ -84,7 +84,7 @@
 			</ul>
 
 			<div *ngIf="!bestStation">
-				<p>Sorry, there is no place in the world with this strict weather conditions (means that no cities with exact 21˚ C / 50% were found).</p>
+				<p>Sorry, there is no place in the world with this strict weather conditions (means that no cities with exact {{ perfectWeatherConditions[gender].temperature }}˚ C / {{ perfectWeatherConditions[gender].humidity }}% were found).</p>
 				<p>But don't worry, we found a good fit for you (with 1˚ C and 5% deviation), take a look:</p>
 			</div>
 
