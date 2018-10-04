@@ -12,6 +12,14 @@
         margin-right: 15px;
         font-size: 1.4rem;
     }
+
+    .forecast-chart {
+        border: 1px solid red;
+        
+        .domain {
+            display: none;
+        }
+    }
 }
 
 .load-more-wrp {

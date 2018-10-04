@@ -79,7 +79,6 @@
 				<li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let station of suitableStations | slice:0:suitableStationsToShow">
 					{{ station.name }}
 
-					
 					<span class="badge-wrp">
 						<span class="weather-icon" [innerHTML]="getWeatherIcon(station)"></span>
 
@@ -88,7 +87,10 @@
 						</span>
 					</span>
 
-					<button type="button" class="btn btn-link" (click)="getForecast(station.id)">Get forecast</button>
+					<span>
+						<button type="button" class="btn btn-link" (click)="getForecast(station.id)">Get 5-days forecast</button>
+						<svg width="200" height="50" id="forecast-{{ station.id }}" class="forecast-chart"></svg>
+					</span>
 				</li>
 			</ul>
 		</div><!-- col -->

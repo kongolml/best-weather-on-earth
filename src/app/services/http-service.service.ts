@@ -11,7 +11,7 @@ export class HttpService {
   ) { }
 
 
-  OPEN_WEATHER_API_KEY: string = '87344724acbcbb242a4753492a391ee6'
+  OPEN_WEATHER_API_KEY: string = '6ce1d23a23d2578091f8ba9531135924'
 
 
   getWeatherWorld() {
