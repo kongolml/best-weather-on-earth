@@ -1,7 +1,18 @@
 html, body {
-	font-size: 16px;
+    font-size: 16px;
+    color: #444;
 }
 
 body {
     padding: 15px;
+}
+
+.forecast-chart {
+    g.tick {
+        opacity: 0;
+    
+        &:first-of-type, &:last-of-type {
+            opacity: 1;
+        }
+    }
 }

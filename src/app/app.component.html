@@ -48,11 +48,19 @@
 	</div><!-- row -->
 
 
-	<div class="row">
+	<div class="row" *ngIf="!dataLoaded">
+		<div class="col" style="text-align: center;">
+			<p>Loading...</p>
+			<div class="lds-ripple"><div></div><div></div></div>
+		</div>
+	</div>
+	
+
+	<div class="row" *ngIf="dataLoaded">
 		<div class="col">
-			<ul class="list-group stations-list" *ngIf="bestStation && bestStation.length">
+			<ul class="list-group stations-list" *ngIf="bestStation">
 				<li class="list-group-item d-flex justify-content-between align-items-center">
-					{{ bestStation.name }}
+						<span>{{ bestStation.name }}</span>
 
 					<span class="badge-wrp">
 						<span class="weather-icon" [innerHTML]="getWeatherIcon(bestStation)"></span>
@@ -60,6 +68,11 @@
 						<span class="badge badge-primary badge-pill">
 							{{ bestStation.main.temp }}˚ C / {{ bestStation.main.humidity }}%
 						</span>
+					</span>
+
+					<span class="forecast-wrp">
+						<button type="button" class="btn btn-link" (click)="getForecast($event, bestStation.id)">Get 5-days forecast</button>
+						<svg width="200" height="38" id="forecast-{{ bestStation.id }}" class="forecast-chart"></svg>
 					</span>
 				</li>
 			</ul>
@@ -69,15 +82,16 @@
 				<p>But don't worry, we found a good fit for you (with 1˚ C and 5% deviation), take a look:</p>
 			</div>
 
-			<p *ngIf="bestStation && bestStation.length">Worth mentioning:</p>
+			<p *ngIf="bestStation">Worth mentioning:</p>
 		</div><!-- col -->
 	</div><!-- row -->
 
-	<div class="row">
+
+	<div class="row" *ngIf="dataLoaded">
 		<div class="col">
 			<ul class="list-group stations-list">
 				<li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let station of suitableStations | slice:0:suitableStationsToShow">
-					{{ station.name }}
+					<span>{{ station.name }}</span>
 
 					<span class="badge-wrp">
 						<span class="weather-icon" [innerHTML]="getWeatherIcon(station)"></span>
@@ -87,9 +101,9 @@
 						</span>
 					</span>
 
-					<span>
-						<button type="button" class="btn btn-link" (click)="getForecast(station.id)">Get 5-days forecast</button>
-						<svg width="200" height="50" id="forecast-{{ station.id }}" class="forecast-chart"></svg>
+					<span class="forecast-wrp">
+						<button type="button" class="btn btn-link" (click)="getForecast($event, station.id)">Get 5-days forecast</button>
+						<svg width="200" height="38" id="forecast-{{ station.id }}" class="forecast-chart"></svg>
 					</span>
 				</li>
 			</ul>
