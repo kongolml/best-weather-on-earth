@@ -16,7 +16,7 @@ export class AppComponent {
 		private sanitizer: DomSanitizer
 	) {}
 
-	title = 'best-weather-on-earth';
+	title = 'Best weather on Earth';
 
   	perfectWeatherConditions = {
 		male: {
