@@ -19,14 +19,16 @@ export class AppComponent {
 	title = 'Best weather on Earth';
 
   	perfectWeatherConditions = {
-		male: {
-			temperature: 21,
-			humidity: 50
-		},
-		female: {
-			temperature: 22,
-			humidity: 50
-		}
+			male: {
+				temperature: 21,
+				humidity: 50
+			},
+			female: {
+				temperature: 22,
+				humidity: 50
+			},
+			appliedDeviationTemp: 10,
+			appliedDeviationHumidity: 30
   	}
 
 	weatherData: Array<any> = []
@@ -75,8 +77,8 @@ export class AppComponent {
 		
 		this.suitableStations = this.weatherData.filter(station => {
   			return (
-  				this.isInRange(parseInt(station.main.temp), temperature, 1) &&
-  				this.isInRange(station.main.humidity, humidity, 5)
+  				this.isInRange(parseInt(station.main.temp), temperature, 20) &&
+  				this.isInRange(station.main.humidity, humidity, 50)
   			)
 		})
 	}

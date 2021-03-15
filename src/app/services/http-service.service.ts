@@ -15,7 +15,7 @@ export class HttpService {
 
 
   getWeatherWorld() {
-  	const boundingBox = '-180,-90,180,90'
+  	const boundingBox = '12,32,15,37,10'
     const zoom = '8' // this will scan more stations and allow us to find the perfect one
   	let url = `https://api.openweathermap.org/data/2.5/box/city?bbox=${boundingBox},${zoom}&appid=${this.OPEN_WEATHER_API_KEY}`
 
