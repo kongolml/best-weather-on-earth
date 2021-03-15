@@ -88,7 +88,7 @@
 				<p>But don't worry, we found a good fit for you (with {{ perfectWeatherConditions.appliedDeviationTemp }}&deg;C and {{ perfectWeatherConditions.appliedDeviationHumidity }}% deviation), take a look:</p>
 			</div>
 
-			<p *ngIf="bestStation">Worth mentioning (1˚ C and 5% deviation):</p>
+			<p *ngIf="bestStation">Worth mentioning ({{ perfectWeatherConditions.appliedDeviationTemp }}&deg;C and {{ perfectWeatherConditions.appliedDeviationHumidity }}% deviation):</p>
 		</div><!-- col -->
 	</div><!-- row -->
 

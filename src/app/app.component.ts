@@ -77,8 +77,8 @@ export class AppComponent {
 		
 		this.suitableStations = this.weatherData.filter(station => {
   			return (
-  				this.isInRange(parseInt(station.main.temp), temperature, 20) &&
-  				this.isInRange(station.main.humidity, humidity, 50)
+  				this.isInRange(parseInt(station.main.temp), temperature, this.perfectWeatherConditions.appliedDeviationTemp) &&
+  				this.isInRange(station.main.humidity, humidity, this.perfectWeatherConditions.appliedDeviationHumidity)
   			)
 		})
 	}
