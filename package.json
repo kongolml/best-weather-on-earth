@@ -53,9 +53,5 @@
     "ts-node": "*",
     "tslint": "*",
     "typescript": "^4.1.5"
-  },
-  "engines": {
-    "node": "8.9.4",
-    "npm": "6.4.1"
   }
 }
